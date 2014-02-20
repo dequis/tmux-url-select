@@ -1,14 +1,15 @@
 # tmux-url-select
 
-`tmux-url-select` is a perl script that integrates tightly with tmux to capture
-the current pane buffer, switch to a window with highlighted links, and let you
-select the link you want to open/yank.
+`tmux-url-select` is a perl script that lets you select URLs with the keyboard.
+
+It integrates with tmux to capture the current pane buffer, switch to a window
+with highlighted links, and let you select the link you want to open/yank.
 
 It's like the urxvtperls [url-select][1] script or [urlview][2], except that
-it's inspired by the interface of the former and the capture-pane method usually
-used with the latter.
+it's inspired by the interface of the former and the capture-pane method
+usually used with the latter.
 
-Features!
+## Features
 
  * Tightly integrated to tmux to prevent flickering when switching to url
    selection
@@ -25,6 +26,10 @@ Features!
 [Yes][3]
 
 [3]: https://news.ycombinator.com/item?id=3067434
+
+## Huge animated GIF
+
+![](http://dump.dequis.org/e1f1c.gif)
 
 ## Requirements
 
