@@ -40,7 +40,31 @@ Optional and configurable: `xdg-open` (can be any url opener or browser) and
 
 ## Installation
 
-Place it somewhere in your path and `chmod +x` it.
+Place it somewhere in your path with name `tmux-url-select` and `chmod +x` it.
+
+Add this to your `.tmux.conf`:
+
+    bind some-key-here run tmux-url-select
+
+Where some-key-here is any key you want to use to start url selection.
+Personally I use "z" which is an unused keybinding that is really close to my
+tmux prefix key (`` ` ``)
+
+    bind z run tmux-url-select
+
+## Usage
+
+Once you're inside tmux-url-select, keybindings:
+
+ * `j`: down
+ * `k`: up
+ * `0`-`9`: select link by number
+ * `y`: yank (copy to clipboard)
+ * Enter: open link
+ * `q`: quit
+
+You can't use arrow keys because those are more complex than a single ascii
+character.
 
 ## Configuration
 
@@ -60,29 +84,6 @@ your liking.
 
 Probably should add some explanations. Maybe. For now just go ahead and
 experiment with stuff.
-
-## Usage
-
-Add this to your `.tmux.conf`:
-
-    bind some-key-here run tmux-url-select
-
-Personally I use "z" which is an unused keybinding that is really close to my
-tmux prefix key (`` ` ``)
-
-    bind z run tmux-url-select
-
-Once you're inside tmux-url-select, keybindings:
-
- * `j`: down
- * `k`: up
- * `0`-`9`: select link by number
- * `y`: yank (copy to clipboard)
- * Enter: open link
- * `q`: quit
-
-You can't use arrow keys because those are more complex than a single ascii
-character.
 
 ## Known issues
 
