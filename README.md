@@ -60,7 +60,8 @@ Once you're inside tmux-url-select, keybindings:
  * `k`: up
  * `0`-`9`: select link by number
  * `y`: yank (copy to clipboard)
- * Enter: open link
+ * Enter or `o`: open link
+ * `Y` / `O`: yank or open link without closing
  * `q`: quit
 
 You can't use arrow keys because those are more complex than a single ascii

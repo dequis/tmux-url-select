@@ -53,7 +53,7 @@ sub clear {
 sub display_status_bar {
     my $is_first_line = shift;
     my $position = $is_first_line ? "2;2" : "1;2";
-    print sprintf("\033[%sH%s URL select: (%s/%s) [j/k/y/q/enter] \033[0m", $position, PROMPT_COLOR, $selection+1, $match_count);
+    print sprintf("\033[%sH%s URL select: (%s/%s) [j/k/y/o/q/enter] \033[0m", $position, PROMPT_COLOR, $selection+1, $match_count);
 }
 
 sub display_highlighted_buffer {
@@ -128,7 +128,7 @@ sub fix_url {
 
 sub launch_url {
     my $url = fix_url(shift);
-    tmux_switch_to_last();
+    tmux_switch_to_last() if shift;
     system sprintf(COMMAND, single_quote_escape($url));
     tmux_display_message("Launched ". $url) if VERBOSE_MESSAGES;
 
@@ -140,7 +140,7 @@ sub launch_url {
 
 sub yank_url {
     my $url = fix_url(shift);
-    tmux_switch_to_last();
+    tmux_switch_to_last() if shift;
     system sprintf(YANK_COMMAND, single_quote_escape($url));
     tmux_display_message("Yanked ". $url) if VERBOSE_MESSAGES;
 }
@@ -173,9 +173,10 @@ sub main_inner {
         $selection-- if /k/;
         $selection = ($_-1) if /[0-9]/;
         $selection %= $match_count;
-        yank_url($matches[$selection]) if /y/;
-        return launch_url($matches[$selection]) if /\n/;
-        return if /q/;
+        my $do_return = /[qyo\n]/;
+        yank_url($matches[$selection], $do_return) if /yY/;
+        launch_url($matches[$selection], $do_return) if /[\noO]/;
+        return if $do_return;
         display_stuff();
     }
 }
