@@ -30,7 +30,7 @@ use constant NORMAL_LINK_HIGHLIGHT => "\033[94;1;4m";
 # regex stolen from urxvtperls url-select.pl
 my $url_pattern = qr{(
     (?:https?://|ftp://|news://|git://|mailto:|file://|www\.)
-    [\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27()~]
+    [\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27(~]
 )}x;
 
 ### config end
@@ -106,7 +106,7 @@ sub tmux_open_inner_window {
 
 sub enable_canonical_mode {
     # "canonical mode" to read char by char, thanks roger.
-    system "stty", "-icanon";
+    system "stty", "-icanon", "cbreak", "min", "1", "-echo";
 }
 
 sub single_quote_escape {
@@ -145,6 +145,8 @@ sub yank_url {
 
 sub main_inner {
     $raw_buffer = tmux_get_buffer();
+    system "tmux delete-buffer";
+
     $buffer = $raw_buffer =~ s/\n$//r;
     $buffer_first_newline_position = index($raw_buffer, "\n");
 
