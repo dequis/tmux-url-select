@@ -15,6 +15,8 @@ use constant YANK_COMMAND => 'echo %s | xclip -i';
 use constant SHOW_STATUS_BAR => 1;
 use constant VERBOSE_MESSAGES => 0;
 use constant TMUX_WINDOW_TITLE => 'Select URL';
+use constant TMUX_WINDOW_ID => 9999;
+use constant HIDE_WINDOW => 1;
 
 use constant PROMPT_COLOR => "\033[42;30m";
 use constant ACTIVE_LINK_HIGHLIGHT => "\033[44;4m";
@@ -87,7 +89,7 @@ sub tmux_switch_to_last {
 }
 
 sub tmux_select_my_window {
-    system "tmux", "select-window", "-t", TMUX_WINDOW_TITLE;
+    system "tmux", "select-window", "-t", TMUX_WINDOW_ID;
 }
 
 sub tmux_capture_pane {
@@ -99,7 +101,9 @@ sub tmux_get_buffer {
 }
 
 sub tmux_open_inner_window {
-    system "tmux", "new-window", "-dn", TMUX_WINDOW_TITLE, "$0 inner";
+    system "tmux", "new-window", "-dn", "", "-t", TMUX_WINDOW_ID, "$0 inner";
+    system "tmux", "setw", "-qt", TMUX_WINDOW_ID, "window-status-format", "";
+    system "tmux", "setw", "-qt", TMUX_WINDOW_ID, "window-status-current-format", "";
 }
 
 # other shell helpers
