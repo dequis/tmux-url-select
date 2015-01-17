@@ -189,6 +189,7 @@ sub main {
 
     if (!$match_count) {
         tmux_display_message("No URLs");
+        system "tmux delete-buffer";
         exit 0;
     }
 
