@@ -174,7 +174,7 @@ sub main_inner {
         $selection = ($_-1) if /[0-9]/;
         $selection %= $match_count;
         my $do_return = /[qyo\n]/;
-        yank_url($matches[$selection], $do_return) if /yY/;
+        yank_url($matches[$selection], $do_return) if /[yY]/;
         launch_url($matches[$selection], $do_return) if /[\noO]/;
         return if $do_return;
         display_stuff();
