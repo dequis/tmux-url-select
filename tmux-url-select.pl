@@ -9,7 +9,7 @@ use warnings;
 
 ### config
 
-use constant COMMAND => 'xdg-open %s';
+use constant COMMAND => 'setsid xdg-open %s &';
 use constant YANK_COMMAND => 'echo %s | xclip -i';
 
 use constant SHOW_STATUS_BAR => 1;
