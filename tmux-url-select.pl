@@ -9,7 +9,7 @@ use warnings;
 
 ### config
 
-use constant COMMAND => 'setsid xdg-open %s &';
+use constant COMMAND => 'xdg-open %s';
 use constant YANK_COMMAND => 'echo %s | xclip -i';
 
 use constant SHOW_STATUS_BAR => 1;
@@ -129,13 +129,13 @@ sub fix_url {
 sub launch_url {
     my $url = fix_url(shift);
     tmux_switch_to_last() if shift;
-    system sprintf(COMMAND, single_quote_escape($url));
-    tmux_display_message("Launched ". $url) if VERBOSE_MESSAGES;
+    $SIG{CHLD} = 'IGNORE';
+    $SIG{HUP} = 'IGNORE';
 
-    # shitty workaround for race conditions
-    # gvfs-open doesn't like when we kill the terminal
-    # and i'm not going to setsid it
-    sleep 1;
+    unless (fork) {
+        tmux_display_message("Launched ". $url) if VERBOSE_MESSAGES;
+        exec sprintf(COMMAND, single_quote_escape($url));
+    }
 }
 
 sub yank_url {
