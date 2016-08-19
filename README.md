@@ -56,16 +56,13 @@ tmux prefix key (`` ` ``)
 
 Once you're inside tmux-url-select, keybindings:
 
- * `j`: down
- * `k`: up
+ * `j` or down arrow: down
+ * `k` or up arrow: up
  * `0`-`9`: select link by number
  * `y`: yank (copy to clipboard)
  * Enter or `o`: open link
  * `Y` / `O`: yank or open link without closing
  * `q`: quit
-
-You can't use arrow keys because those are more complex than a single ascii
-character.
 
 ## Configuration
 

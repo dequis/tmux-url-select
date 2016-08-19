@@ -169,8 +169,8 @@ sub main_inner {
 
     # main loop
     while(defined($_ = getc)) {
-        $selection++ if /j/;
-        $selection-- if /k/;
+        $selection++ if /[jB]/;
+        $selection-- if /[kA]/;
         $selection = ($_-1) if /[0-9]/;
         $selection %= $match_count;
         my $do_return = /[qyo\n]/;
