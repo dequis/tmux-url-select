@@ -96,26 +96,8 @@ we're all flawed in different ways.
 Might flicker when selecting links because the whole screen is redrawn. It can't
 be helped. Works fine for me most of the time.
 
-Already workarounded, but: Some url openers don't like the fact that we kill the
-terminal right after running the process. `gvfs-open` in particular opens my
-browser asynchronously and doesn't wait for it, so there's a race condition in
-which the terminal often get closed before the browser gets to do anything.
-Workarounds for this:
-
- * `sleep 1` after running the command. The laziest and most generic workaround,
-   currently applied in the code because it doesn't cause any other issues.
- * Prefix your url open command with `setsid`. This makes the child process a
-   process group leader, so it won't care about getting the terminal closed.
- * Prefix with `nohup`. Does something similar but not quite the same as
-   `setsid`, and didn't work for me, but worth a try!
- * Wrap the command with `$(...)`. Weirdest one, I found this trick accidentally
-   last year and [had to ask stack overflow][4] about it. It makes bash wait for
-   the whole process tree to finish executing, apparently.
- * Prefix with `strace -f -o /dev/null`. Another weird one! This one also seems
-   to force waiting for all child processes to finish, by attaching to them with
-   ptrace. It's overkill and that makes it fun.
-
-[4]: http://stackoverflow.com/questions/16874043/bash-command-substitution-forcing-process-to-foreground
+There used to be a section here about problems launching process but that
+should be fixed now.
 
 ## FAQ
 
