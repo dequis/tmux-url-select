@@ -126,23 +126,30 @@ sub fix_url {
     return $url;
 }
 
-sub launch_url {
-    my $url = fix_url(shift);
-    tmux_switch_to_last() if shift;
+sub safe_exec {
+    my ($command, $message) = @_;
     $SIG{CHLD} = 'IGNORE';
     $SIG{HUP} = 'IGNORE';
 
     unless (fork) {
-        tmux_display_message("Launched ". $url) if VERBOSE_MESSAGES;
-        exec sprintf(COMMAND, single_quote_escape($url));
+        tmux_display_message($message) if VERBOSE_MESSAGES;
+        exec $command;
     }
+}
+
+sub launch_url {
+    my $url = fix_url(shift);
+    tmux_switch_to_last() if shift;
+
+    my $command = sprintf(COMMAND, single_quote_escape($url));
+    safe_exec($command, "Launched ". $url);
 }
 
 sub yank_url {
     my $url = fix_url(shift);
     tmux_switch_to_last() if shift;
-    system sprintf(YANK_COMMAND, single_quote_escape($url));
-    tmux_display_message("Yanked ". $url) if VERBOSE_MESSAGES;
+    my $command = sprintf(YANK_COMMAND, single_quote_escape($url));
+    safe_exec($command, "Yanked ". $url);
 }
 
 # main functions
