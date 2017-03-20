@@ -32,7 +32,7 @@ use constant NORMAL_LINK_HIGHLIGHT => "\033[94;1;4m";
 # regex stolen from urxvtperls url-select.pl
 my $url_pattern = qr{(
     (?:https?://|ftp://|news://|git://|mailto:|file://|www\.)
-    [\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27(~]
+    [\w\-\@;\/?:&=%\$_.+!*\x27(),~#\x1b\[\]]+[\w\-\@;\/?&=%\$_+!*\x27(~]
 )}x;
 
 ### config end
@@ -122,7 +122,9 @@ sub single_quote_escape {
 sub fix_url {
     my $url = shift;
     # some silly url openers think ^www. urls are files
-    return "http://".$url if $url =~ /^www\./;
+    $url = "http://".$url if $url =~ /^www\./;
+    # clear out color codes
+    $url =~ s/\x1b\[[0-9;]*m//g;
     return $url;
 }
 
