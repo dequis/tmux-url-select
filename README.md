@@ -36,7 +36,7 @@ usually used with the latter.
 Depends on `perl`, `tmux` and `stty`.
 
 Optional and configurable: `xdg-open` (can be any url opener or browser) and
-`xclip` (for yank)
+`xclip` (for yank). Use the environment variables `TMUX_URL_SELECT_CLIP_CMD` and `TMUX_URL_SELECT_OPEN_CMD` to change these commands.
 
 ## Installation
 

@@ -9,9 +9,6 @@ use warnings;
 
 ### config
 
-use constant COMMAND => 'xdg-open %s';
-use constant YANK_COMMAND => 'echo %s | xclip -i';
-
 use constant SHOW_STATUS_BAR => 1;
 use constant VERBOSE_MESSAGES => 0;
 use constant TMUX_WINDOW_TITLE => 'Select URL';
@@ -143,14 +140,22 @@ sub launch_url {
     my $url = fix_url(shift);
     tmux_switch_to_last() if shift;
 
-    my $command = sprintf(COMMAND, single_quote_escape($url));
+    my $command = sprintf(
+        "%s %s",
+        $ENV{TMUX_URL_SELECT_OPEN_CMD} || 'xdg-open',
+        single_quote_escape($url)
+    );
     safe_exec($command, "Launched ". $url);
 }
 
 sub yank_url {
     my $url = fix_url(shift);
     tmux_switch_to_last() if shift;
-    my $command = sprintf(YANK_COMMAND, single_quote_escape($url));
+    my $command = sprintf(
+        "echo %s | %s",
+        single_quote_escape($url),
+        $ENV{TMUX_URL_SELECT_CLIP_CMD} || 'xclip -i'
+    );
     safe_exec($command, "Yanked ". $url);
 }
 
