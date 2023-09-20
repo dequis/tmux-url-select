@@ -9,6 +9,8 @@ use warnings;
 
 ### config
 
+our $tmux_command = $ENV{TMUX_URL_SELECT_TMUX_CMD} || 'tmux';
+
 use constant SHOW_STATUS_BAR => 1;
 use constant VERBOSE_MESSAGES => 0;
 use constant TMUX_WINDOW_TITLE => 'Select URL';
@@ -78,29 +80,29 @@ sub display_stuff {
 # tmux command helpers
 
 sub tmux_display_message {
-    system 'tmux', 'display-message', shift;
+    system $tmux_command, 'display-message', shift;
 }
 
 sub tmux_switch_to_last {
-    system 'tmux', 'last-window';
+    system $tmux_command, 'last-window';
 }
 
 sub tmux_select_my_window {
-    system "tmux", "select-window", "-t", TMUX_WINDOW_ID;
+    system $tmux_command, "select-window", "-t", TMUX_WINDOW_ID;
 }
 
 sub tmux_capture_pane {
-    system "tmux", "capture-pane", "-eJ";
+    system $tmux_command, "capture-pane", "-eJ";
 }
 
 sub tmux_get_buffer {
-    return `tmux show-buffer`;
+    return `$tmux_command show-buffer`;
 }
 
 sub tmux_open_inner_window {
-    system "tmux", "new-window", "-dn", "", "-t", TMUX_WINDOW_ID, "$0 inner";
-    system "tmux", "setw", "-qt", TMUX_WINDOW_ID, "window-status-format", "";
-    system "tmux", "setw", "-qt", TMUX_WINDOW_ID, "window-status-current-format", "";
+    system $tmux_command, "new-window", "-dn", "", "-t", TMUX_WINDOW_ID, "$0 inner";
+    system $tmux_command, "setw", "-qt", TMUX_WINDOW_ID, "window-status-format", "";
+    system $tmux_command, "setw", "-qt", TMUX_WINDOW_ID, "window-status-current-format", "";
 }
 
 # other shell helpers
@@ -163,7 +165,7 @@ sub yank_url {
 
 sub main_inner {
     $raw_buffer = tmux_get_buffer();
-    system "tmux delete-buffer";
+    system $tmux_command, "delete-buffer";
 
     $buffer = $raw_buffer =~ s/\n$//r;
     $buffer_first_newline_position = index($raw_buffer, "\n");
@@ -203,7 +205,7 @@ sub main {
 
     if (!$match_count) {
         tmux_display_message("No URLs");
-        system "tmux delete-buffer";
+        system $tmux_command, "delete-buffer";
         exit 0;
     }
 

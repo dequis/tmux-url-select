@@ -101,3 +101,7 @@ should be fixed now.
 Q: Why perl? It's dead and it sucks, cool kids use node.js nowadays.
 
 A: It's fun. Fun things are fun.
+
+Q: Can I use it with [Tmate](https://tmate.io/)?
+
+A: Yes, just set in your environment: `TMUX_URL_SELECT_TMUX_CMD=tmate`
