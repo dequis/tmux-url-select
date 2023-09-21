@@ -36,7 +36,7 @@ usually used with the latter.
 Depends on `perl`, `tmux` and `stty`.
 
 Optional and configurable: `xdg-open` (can be any url opener or browser) and
-`xclip` (for yank)
+`xclip` (for yank). Use the environment variables `TMUX_URL_SELECT_CLIP_CMD` and `TMUX_URL_SELECT_OPEN_CMD` to change these commands.
 
 ## Installation
 
@@ -101,3 +101,7 @@ should be fixed now.
 Q: Why perl? It's dead and it sucks, cool kids use node.js nowadays.
 
 A: It's fun. Fun things are fun.
+
+Q: Can I use it with [Tmate](https://tmate.io/)?
+
+A: Yes, just set in your environment: `TMUX_URL_SELECT_TMUX_CMD=tmate`
