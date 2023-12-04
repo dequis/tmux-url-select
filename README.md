@@ -40,6 +40,8 @@ Optional and configurable: `xdg-open` (can be any url opener or browser) and
 
 ## Installation
 
+### Manual
+
 Place it somewhere in your path with name `tmux-url-select` and `chmod +x` it.
 
 Add this to your `.tmux.conf`:
@@ -51,6 +53,13 @@ Personally I use "z" which is an unused keybinding that is really close to my
 tmux prefix key (`` ` ``)
 
     bind z run tmux-url-select
+
+### TMUX Plugin Manager
+
+To install tmux-autoreload with TPM (https://github.com/tmux-plugins/tpm), add the
+following line to the end of your tmux configuration file:
+
+    set-option -g @plugin 'dequis/tmux-url-select'
 
 ## Usage
 
