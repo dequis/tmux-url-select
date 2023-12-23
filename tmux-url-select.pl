@@ -15,7 +15,6 @@ use constant SHOW_STATUS_BAR => 1;
 use constant VERBOSE_MESSAGES => 0;
 use constant TMUX_WINDOW_TITLE => 'Select URL';
 use constant TMUX_WINDOW_ID => 9999;
-use constant HIDE_WINDOW => 1;
 
 use constant PROMPT_COLOR => "\033[42;30m";
 use constant ACTIVE_LINK_HIGHLIGHT => "\033[44;4m";
